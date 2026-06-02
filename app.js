@@ -1,7 +1,7 @@
 /* ── RSVP App — Shared Storage & Form Logic ── */
 
 const CONFIG = {
-  eventTitle:    'Benjamin and Valerie Gradutation Party',
+  eventTitle:    'Benjamin and Valerie Gradutating Party',
   eventDate:     'Saturday, August 8 · 7:00 PM',
   eventLocation: 'Casa de Amistad - 118 E Tyler Ave, Harlingen, TX 78550',
 };
