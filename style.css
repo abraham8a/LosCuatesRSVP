@@ -62,8 +62,8 @@ body {
 /* ── Side-by-side event header ── */
 .event-header-split {
   display: grid;
-  grid-template-columns: 160px 1fr;
-  gap: 1.5rem;
+  grid-template-columns: clamp(110px, 26vw, 190px) 1fr;
+  gap: clamp(1rem, 3vw, 1.75rem);
   align-items: center;
   margin-bottom: 2rem;
   animation: fadeUp 0.4s ease both;
@@ -74,9 +74,9 @@ body {
 
 .photo-frame {
   position: relative;
-  width: 150px;
-  height: 190px;
-  border-radius: 12px;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: clamp(8px, 2vw, 14px);
   overflow: hidden;
   border: 2px dashed var(--border-strong);
   background: var(--accent-light);
@@ -622,6 +622,24 @@ footer {
 .hidden { display: none !important; }
 a { color: var(--accent); }
 
+.page-cancel-hint {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  padding-bottom: 1rem;
+}
+.page-cancel-hint a { color: var(--accent); text-decoration: none; }
+.page-cancel-hint a:hover { text-decoration: underline; }
+
+.email-status {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  min-height: 1em;
+  text-align: center;
+}
+
 /* ── Responsive ── */
 @media (max-width: 480px) {
   .event-header-split {
@@ -629,7 +647,7 @@ a { color: var(--accent); }
     text-align: center;
   }
   .photo-col { display: flex; justify-content: center; }
-  .photo-frame { width: 140px; height: 175px; }
+  .photo-frame { width: clamp(130px, 45vw, 200px); }
   .event-meta { align-items: center; }
   .rsvp-card { padding: 1.5rem 1.1rem; }
   .radio-group { grid-template-columns: 1fr; }

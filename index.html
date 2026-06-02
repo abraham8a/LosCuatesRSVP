@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
 
@@ -127,8 +128,11 @@
         <div class="conf-row"><span>Guests</span><strong id="conf-guests">—</strong></div>
         <div class="conf-row"><span>Status</span><strong id="conf-status" class="status-attending">Attending ✓</strong></div>
       </div>
-      <p class="cancel-hint">Need to cancel? <a href="cancel.html">Manage your RSVP →</a></p>
+      <p class="cancel-hint">Need to cancel? <a href="https://abraham8a.github.io/LosCuatesRSVP/cancel.html">Manage your RSVP →</a></p>
+      <p class="email-status" id="email-status"></p>
     </section>
+
+    <p class="page-cancel-hint">Need to cancel a previous RSVP? <a href="https://abraham8a.github.io/LosCuatesRSVP/cancel.html">Manage your RSVP →</a></p>
 
   </main>
 
@@ -137,6 +141,7 @@
   </footer>
 
   <script src="app.js"></script>
+  <script src="email.js"></script>
   <script src="photo.js"></script>
 </body>
 </html>

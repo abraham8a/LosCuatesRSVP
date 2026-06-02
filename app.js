@@ -1,9 +1,9 @@
 /* ── RSVP App — Shared Storage & Form Logic ── */
 
 const CONFIG = {
-  eventTitle:    'Benjamin and Valerie Gradutating Party',
-  eventDate:     'Saturday, August 8 · 7:00 PM',
-  eventLocation: 'Casa de Amistad - 118 E Tyler Ave, Harlingen, TX 78550',
+  eventTitle:    'Summer Garden Party',
+  eventDate:     'Saturday, July 19 · 4:00 PM',
+  eventLocation: '123 Rose Garden Lane',
 };
 
 /* ─ Storage helpers ─ */
@@ -115,6 +115,7 @@ if (form) {
 
     upsertGuest(guestData);
     showSuccess(guestData);
+    if (typeof sendRsvpEmails === 'function') sendRsvpEmails(guestData);
   });
 
   function showSuccess(g) {
