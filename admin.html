@@ -13,12 +13,31 @@
   <div class="bg-shape shape-1"></div>
   <div class="bg-shape shape-2"></div>
 
-  <main class="container wide">
+  <!-- Password gate (shown until authenticated) -->
+  <div class="pw-gate" id="pw-gate">
+    <div class="pw-card">
+      <span class="lock-icon">🔒</span>
+      <h2>Host access</h2>
+      <p>Enter the host password to view the dashboard.</p>
+      <div class="field-group" style="text-align:left">
+        <label for="pw-input">Password</label>
+        <input type="password" id="pw-input" placeholder="Enter password" autocomplete="current-password" />
+        <span class="pw-error" id="pw-error"></span>
+      </div>
+      <button class="btn-submit" id="pw-submit">
+        Unlock dashboard
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
 
-    <header class="event-header">
+  <!-- Dashboard (hidden until authenticated) -->
+  <main class="container wide hidden" id="dashboard">
+
+    <header class="event-header" style="text-align:left; margin-bottom:2rem;">
       <a href="index.html" class="back-link">← Guest view</a>
-      <h1>Host dashboard</h1>
-      <p class="eyebrow" id="admin-event-title">Summer Garden Party</p>
+      <h1 style="font-family:'DM Serif Display',serif; font-weight:400; font-size:clamp(1.8rem,4vw,2.5rem); margin-bottom:0.25rem;">Host dashboard</h1>
+      <span class="eyebrow" id="admin-event-title">Graduation Celebration</span>
     </header>
 
     <div class="stats-grid">
@@ -49,6 +68,7 @@
       </div>
       <div class="toolbar-right">
         <button class="btn-ghost small" id="export-btn">Export CSV</button>
+        <button class="btn-ghost small" id="lock-btn">Lock</button>
         <button class="btn-ghost small danger" id="clear-btn">Clear all</button>
       </div>
     </div>
@@ -66,9 +86,7 @@
             <th>Submitted</th>
           </tr>
         </thead>
-        <tbody id="guest-tbody">
-          <!-- rows injected by JS -->
-        </tbody>
+        <tbody id="guest-tbody"></tbody>
       </table>
       <div class="empty-state hidden" id="empty-state">
         <p>No RSVPs yet. Share the link and watch this fill up!</p>

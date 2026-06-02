@@ -13,36 +13,43 @@
   <div class="bg-shape shape-1"></div>
   <div class="bg-shape shape-2"></div>
 
-  <!-- Hero Banner -->
-  <div class="hero-banner" id="hero-banner">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <span class="eyebrow hero-eyebrow">You're invited</span>
-      <h1 id="event-title" class="hero-title">Summer Garden Party</h1>
-      <div class="event-meta hero-meta">
-        <span class="meta-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-          <span id="event-date">Saturday, July 19 · 4:00 PM</span>
-        </span>
-        <span class="meta-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-          <span id="event-location">123 Rose Garden Lane</span>
-        </span>
+  <main class="container">
+
+    <!-- Side-by-side header: photo left, details right -->
+    <header class="event-header-split">
+
+      <!-- Photo column -->
+      <div class="photo-col">
+        <div class="photo-frame" id="photo-frame">
+          <div class="photo-placeholder" id="photo-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" width="32" height="32" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            <span>Graduate photo</span>
+          </div>
+          <img id="grad-photo" class="grad-photo hidden" alt="Graduate photo" />
+          <label class="photo-upload-btn" id="upload-label" title="Upload photo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <input type="file" id="photo-input" accept="image/*" style="display:none" />
+          </label>
+          <button class="photo-remove-btn hidden" id="remove-photo-btn" title="Remove photo">✕</button>
+        </div>
       </div>
-    </div>
-    <!-- Photo upload trigger (visible when no photo set) -->
-    <label class="hero-upload-btn" id="hero-upload-label" title="Add a photo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-      Add photo
-      <input type="file" id="hero-photo-input" accept="image/*" style="display:none" />
-    </label>
-    <button class="hero-remove-btn hidden" id="hero-remove-btn" title="Remove photo">✕ Remove photo</button>
-  </div>
 
-  <main class="container" style="padding-top: 2rem;">
+      <!-- Details column -->
+      <div class="details-col">
+        <span class="eyebrow">You're invited</span>
+        <h1 id="event-title">Graduation Celebration</h1>
+        <div class="event-meta">
+          <span class="meta-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="15" height="15"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            <span id="event-date">Saturday, July 19 · 4:00 PM</span>
+          </span>
+          <span class="meta-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="15" height="15"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            <span id="event-location">123 Rose Garden Lane</span>
+          </span>
+        </div>
+      </div>
 
-    <header class="event-header" style="display:none" id="fallback-header">
-      <!-- shown only if hero is hidden for some reason -->
     </header>
 
     <section class="rsvp-card" id="form-section">
@@ -59,7 +66,7 @@
           <label for="email">Email address</label>
           <input type="email" id="email" placeholder="you@example.com" required autocomplete="email" />
           <span class="field-error" id="email-error"></span>
-          <span class="field-hint">We'll send your confirmation here</span>
+          <span class="field-hint">We'll use this if you need to manage your RSVP</span>
         </div>
 
         <div class="field-group">
@@ -104,7 +111,7 @@
 
         <button type="submit" class="btn-submit">
           <span class="btn-text">Send my RSVP</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
 
       </form>
@@ -113,14 +120,14 @@
     <section class="rsvp-card success-card hidden" id="success-section">
       <div class="success-icon">✓</div>
       <h2 id="success-heading">You're on the list!</h2>
-      <p id="success-message">We're so excited to see you. A confirmation has been saved below.</p>
+      <p id="success-message">We're so excited to see you.</p>
       <div class="confirmation-box">
         <div class="conf-row"><span>Name</span><strong id="conf-name">—</strong></div>
         <div class="conf-row"><span>Email</span><strong id="conf-email">—</strong></div>
         <div class="conf-row"><span>Guests</span><strong id="conf-guests">—</strong></div>
         <div class="conf-row"><span>Status</span><strong id="conf-status" class="status-attending">Attending ✓</strong></div>
       </div>
-      <p class="cancel-hint">Need to cancel? <a href="cancel.html" id="cancel-link">Manage your RSVP →</a></p>
+      <p class="cancel-hint">Need to cancel? <a href="cancel.html">Manage your RSVP →</a></p>
     </section>
 
   </main>
@@ -130,6 +137,6 @@
   </footer>
 
   <script src="app.js"></script>
-  <script src="hero.js"></script>
+  <script src="photo.js"></script>
 </body>
 </html>
