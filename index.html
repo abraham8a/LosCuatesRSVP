@@ -13,12 +13,13 @@
   <div class="bg-shape shape-1"></div>
   <div class="bg-shape shape-2"></div>
 
-  <main class="container">
-
-    <header class="event-header">
-      <span class="eyebrow">You're invited</span>
-      <h1 id="event-title">Summer Garden Party</h1>
-      <div class="event-meta">
+  <!-- Hero Banner -->
+  <div class="hero-banner" id="hero-banner">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="eyebrow hero-eyebrow">You're invited</span>
+      <h1 id="event-title" class="hero-title">Summer Garden Party</h1>
+      <div class="event-meta hero-meta">
         <span class="meta-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
           <span id="event-date">Saturday, July 19 · 4:00 PM</span>
@@ -28,6 +29,20 @@
           <span id="event-location">123 Rose Garden Lane</span>
         </span>
       </div>
+    </div>
+    <!-- Photo upload trigger (visible when no photo set) -->
+    <label class="hero-upload-btn" id="hero-upload-label" title="Add a photo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Add photo
+      <input type="file" id="hero-photo-input" accept="image/*" style="display:none" />
+    </label>
+    <button class="hero-remove-btn hidden" id="hero-remove-btn" title="Remove photo">✕ Remove photo</button>
+  </div>
+
+  <main class="container" style="padding-top: 2rem;">
+
+    <header class="event-header" style="display:none" id="fallback-header">
+      <!-- shown only if hero is hidden for some reason -->
     </header>
 
     <section class="rsvp-card" id="form-section">
@@ -115,5 +130,6 @@
   </footer>
 
   <script src="app.js"></script>
+  <script src="hero.js"></script>
 </body>
 </html>
