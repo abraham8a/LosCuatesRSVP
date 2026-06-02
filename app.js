@@ -1,9 +1,9 @@
 /* ── RSVP App — Shared Storage & Form Logic ── */
 
 const CONFIG = {
-  eventTitle:    'Summer Garden Party',
-  eventDate:     'Saturday, July 19 · 4:00 PM',
-  eventLocation: '123 Rose Garden Lane',
+  eventTitle:    'Benjamin and Valerie Gradutation Party',
+  eventDate:     'Saturday, August 8 · 7:00 PM',
+  eventLocation: 'Casa de Amistad - 118 E Tyler Ave, Harlingen, TX 78550',
 };
 
 /* ─ Storage helpers ─ */
