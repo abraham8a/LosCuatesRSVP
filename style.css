@@ -78,12 +78,8 @@ body {
   aspect-ratio: 4 / 5;
   border-radius: clamp(8px, 2vw, 14px);
   overflow: hidden;
-  border: 2px dashed var(--border-strong);
-  background: var(--accent-light);
-  cursor: pointer;
-  transition: border-color 0.2s;
+  box-shadow: 0 4px 20px rgba(26,23,20,0.13);
 }
-.photo-frame:hover { border-color: var(--accent); }
 
 .photo-placeholder {
   width: 100%;
