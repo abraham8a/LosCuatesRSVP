@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage RSVP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="bg-shape shape-1"></div>
+  <div class="bg-shape shape-2"></div>
+
+  <main class="container">
+
+    <header class="event-header">
+      <a href="index.html" class="back-link">← Back to RSVP</a>
+      <h1>Manage your RSVP</h1>
+    </header>
+
+    <!-- Lookup form -->
+    <section class="rsvp-card" id="lookup-section">
+      <h2>Find your reservation</h2>
+      <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem;">Enter the email address you used when you RSVPd.</p>
+      <form id="lookup-form" novalidate>
+        <div class="field-group">
+          <label for="lookup-email">Email address</label>
+          <input type="email" id="lookup-email" placeholder="you@example.com" required autocomplete="email" />
+          <span class="field-error" id="lookup-error"></span>
+        </div>
+        <button type="submit" class="btn-submit">
+          <span class="btn-text">Find my RSVP</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </form>
+    </section>
+
+    <!-- Found reservation -->
+    <section class="rsvp-card hidden" id="found-section">
+      <h2>Your reservation</h2>
+      <div class="confirmation-box" style="margin-bottom: 1.5rem;">
+        <div class="conf-row"><span>Name</span><strong id="found-name">—</strong></div>
+        <div class="conf-row"><span>Email</span><strong id="found-email">—</strong></div>
+        <div class="conf-row"><span>Guests</span><strong id="found-guests">—</strong></div>
+        <div class="conf-row"><span>Dietary notes</span><strong id="found-dietary">—</strong></div>
+        <div class="conf-row"><span>Status</span><strong id="found-status">—</strong></div>
+      </div>
+
+      <div id="action-buttons">
+        <button class="btn-cancel" id="cancel-btn">Cancel my RSVP</button>
+        <button class="btn-reactivate hidden" id="reactivate-btn">Reinstate my RSVP</button>
+      </div>
+
+      <div class="cancel-confirm hidden" id="cancel-confirm">
+        <p>Are you sure you want to cancel? The host will be notified.</p>
+        <div class="confirm-buttons">
+          <button class="btn-submit small" id="confirm-cancel-btn">Yes, cancel it</button>
+          <button class="btn-ghost" id="abort-cancel-btn">Never mind</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Not found -->
+    <section class="rsvp-card hidden" id="notfound-section">
+      <div class="notfound-icon">?</div>
+      <h2>No reservation found</h2>
+      <p style="color: var(--text-muted);">We couldn't find an RSVP for that email address. Double-check the spelling or <a href="index.html">submit a new RSVP</a>.</p>
+    </section>
+
+    <!-- Cancelled confirmation -->
+    <section class="rsvp-card hidden" id="cancelled-section">
+      <div class="success-icon" style="background: #fef2f2; color: #ef4444;">✕</div>
+      <h2>RSVP cancelled</h2>
+      <p style="color: var(--text-muted);">Your spot has been released. We'll miss you! If you change your mind, you can always <a href="index.html">RSVP again</a>.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    <a href="admin.html" class="admin-link">Host view</a>
+  </footer>
+
+  <script src="app.js"></script>
+  <script src="cancel.js"></script>
+</body>
+</html>

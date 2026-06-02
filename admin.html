@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Host Dashboard · RSVP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="bg-shape shape-1"></div>
+  <div class="bg-shape shape-2"></div>
+
+  <main class="container wide">
+
+    <header class="event-header">
+      <a href="index.html" class="back-link">← Guest view</a>
+      <h1>Host dashboard</h1>
+      <p class="eyebrow" id="admin-event-title">Summer Garden Party</p>
+    </header>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-label">Attending</span>
+        <span class="stat-value green" id="stat-attending">0</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Total guests</span>
+        <span class="stat-value" id="stat-total-guests">0</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Declined</span>
+        <span class="stat-value red" id="stat-declined">0</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Cancelled</span>
+        <span class="stat-value muted" id="stat-cancelled">0</span>
+      </div>
+    </div>
+
+    <div class="admin-toolbar">
+      <div class="filter-tabs">
+        <button class="tab active" data-filter="all">All</button>
+        <button class="tab" data-filter="attending">Attending</button>
+        <button class="tab" data-filter="declined">Declined</button>
+        <button class="tab" data-filter="cancelled">Cancelled</button>
+      </div>
+      <div class="toolbar-right">
+        <button class="btn-ghost small" id="export-btn">Export CSV</button>
+        <button class="btn-ghost small danger" id="clear-btn">Clear all</button>
+      </div>
+    </div>
+
+    <div class="guest-table-wrap">
+      <table class="guest-table" id="guest-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>+Guests</th>
+            <th>Dietary</th>
+            <th>Message</th>
+            <th>Status</th>
+            <th>Submitted</th>
+          </tr>
+        </thead>
+        <tbody id="guest-tbody">
+          <!-- rows injected by JS -->
+        </tbody>
+      </table>
+      <div class="empty-state hidden" id="empty-state">
+        <p>No RSVPs yet. Share the link and watch this fill up!</p>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="app.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
