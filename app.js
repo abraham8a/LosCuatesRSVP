@@ -1,49 +1,69 @@
-/* ── RSVP App — Shared Storage & Form Logic ── */
+/* ── RSVP App — Supabase Storage & Form Logic ── */
 
 const CONFIG = {
-  eventTitle:    'Benjamin & Valerie Ochoa Grad Party',
-  eventDate:     'Saturday, August 8, 2026 * Dinner: 6-7 PM * Dance: 7-11 PM',
-  eventLocation: 'Casa de Amistad * 1204 Fair Park Blvd, Harlingen, TX 78550',
+  eventTitle:    'Benjamin & Valerie Grad Party',
+  eventDate:     'Saturday, August 8 · 7:00 PM',
+  eventLocation: '1204 Fair Park Blvd, Harlingen, TX 78550',
 };
 
-/* ─ Storage helpers ─ */
-const STORAGE_KEY = 'rsvp_guests';
+/* ─────────────────────────────────────────────────────
+   SUPABASE CONFIG
+   Fill these in after completing setup steps below.
+   ───────────────────────────────────────────────────── */
+const SUPABASE_URL    = 'https://gaijndkezfexpovajwva.supabase.co';   // e.g. https://xxxx.supabase.co
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdhaWpuZGtlemZleHBvdmFqd3ZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxODMyMjcsImV4cCI6MjA5Mzc1OTIyN30.tqCe7POy3fl6P9AXle_y3eMiTxqjUD0F6RJd0FxDvN8';     // long string from Supabase dashboard
 
-function loadGuests() {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-  } catch { return []; }
+/* ─ Supabase client (loaded via CDN in HTML) ─ */
+let db;
+function getDB() {
+  if (!db) db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  return db;
 }
 
-function saveGuests(guests) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(guests));
+/* ─ Database helpers ─ */
+async function loadGuests() {
+  const { data, error } = await getDB()
+    .from('rsvps')
+    .select('*')
+    .order('created_at', { ascending: false });
+  if (error) { console.error('loadGuests:', error); return []; }
+  return data || [];
 }
 
-function findGuestByEmail(email) {
-  return loadGuests().find(g => g.email.toLowerCase() === email.toLowerCase());
+async function findGuestByEmail(email) {
+  const { data, error } = await getDB()
+    .from('rsvps')
+    .select('*')
+    .ilike('email', email.trim())
+    .maybeSingle();
+  if (error) { console.error('findGuestByEmail:', error); return null; }
+  return data;
 }
 
-function upsertGuest(data) {
-  const guests = loadGuests();
-  const idx = guests.findIndex(g => g.email.toLowerCase() === data.email.toLowerCase());
-  if (idx >= 0) {
-    guests[idx] = { ...guests[idx], ...data };
-  } else {
-    guests.push({ ...data, id: Date.now().toString(36), submittedAt: new Date().toISOString() });
-  }
-  saveGuests(guests);
+async function upsertGuest(data) {
+  const row = {
+    name:        data.name,
+    email:       data.email.toLowerCase(),
+    status:      data.status,
+    plus_guests: data.plusGuests || 0,
+    dietary:     data.dietary || '',
+    message:     data.message || '',
+  };
+  const { error } = await getDB()
+    .from('rsvps')
+    .upsert(row, { onConflict: 'email' });
+  if (error) { console.error('upsertGuest:', error); throw error; }
 }
 
-function updateGuestStatus(email, status) {
-  const guests = loadGuests();
-  const idx = guests.findIndex(g => g.email.toLowerCase() === email.toLowerCase());
-  if (idx >= 0) {
-    guests[idx].status = status;
-    guests[idx].updatedAt = new Date().toISOString();
-    saveGuests(guests);
-    return guests[idx];
-  }
-  return null;
+async function updateGuestStatus(email, status) {
+  const { data, error } = await getDB()
+    .from('rsvps')
+    .update({ status, updated_at: new Date().toISOString() })
+    .ilike('email', email.trim())
+    .select()
+    .maybeSingle();
+  if (error) { console.error('updateGuestStatus:', error); return null; }
+  return data;
 }
 
 /* ─ Event detail injection ─ */
@@ -65,82 +85,76 @@ if (form) {
 
   function updateAttendingVisibility() {
     const attending = form.querySelector('input[name="attending"]:checked').value === 'yes';
-    attendingFields.forEach(el => {
-      el.classList.toggle('hidden-field', !attending);
-    });
+    attendingFields.forEach(el => el.classList.toggle('hidden-field', !attending));
   }
-
   attendingRadios.forEach(r => r.addEventListener('change', updateAttendingVisibility));
   updateAttendingVisibility();
 
   function validate() {
     let ok = true;
-    const name = document.getElementById('name');
-    const email = document.getElementById('email');
-    const nameErr = document.getElementById('name-error');
+    const name     = document.getElementById('name');
+    const email    = document.getElementById('email');
+    const nameErr  = document.getElementById('name-error');
     const emailErr = document.getElementById('email-error');
-
-    nameErr.textContent = '';
-    emailErr.textContent = '';
-    name.classList.remove('error');
-    email.classList.remove('error');
-
+    nameErr.textContent = ''; emailErr.textContent = '';
+    name.classList.remove('error'); email.classList.remove('error');
     if (!name.value.trim()) {
       nameErr.textContent = 'Please enter your name.';
-      name.classList.add('error');
-      ok = false;
+      name.classList.add('error'); ok = false;
     }
     if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
       emailErr.textContent = 'Please enter a valid email address.';
-      email.classList.add('error');
-      ok = false;
+      email.classList.add('error'); ok = false;
     }
     return ok;
   }
 
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async e => {
     e.preventDefault();
     if (!validate()) return;
 
+    const submitBtn = form.querySelector('.btn-submit');
+    submitBtn.disabled = true;
+    submitBtn.querySelector('.btn-text').textContent = 'Sending…';
+
     const attending = form.querySelector('input[name="attending"]:checked').value === 'yes';
     const guestData = {
-      name:     document.getElementById('name').value.trim(),
-      email:    document.getElementById('email').value.trim(),
-      attending: attending,
-      status:   attending ? 'attending' : 'declined',
+      name:       document.getElementById('name').value.trim(),
+      email:      document.getElementById('email').value.trim(),
+      status:     attending ? 'attending' : 'declined',
       plusGuests: attending ? parseInt(document.getElementById('guests').value, 10) : 0,
-      dietary:  attending ? document.getElementById('dietary').value.trim() : '',
-      message:  attending ? document.getElementById('message').value.trim() : '',
+      dietary:    attending ? document.getElementById('dietary').value.trim() : '',
+      message:    attending ? document.getElementById('message').value.trim() : '',
     };
 
-    upsertGuest(guestData);
-    showSuccess(guestData);
-    if (typeof sendRsvpEmails === 'function') sendRsvpEmails(guestData);
+    try {
+      await upsertGuest(guestData);
+      showSuccess(guestData);
+      if (typeof sendRsvpEmails === 'function') sendRsvpEmails(guestData);
+    } catch (err) {
+      submitBtn.disabled = false;
+      submitBtn.querySelector('.btn-text').textContent = 'Send my RSVP';
+      alert('Something went wrong saving your RSVP. Please try again.');
+    }
   });
 
   function showSuccess(g) {
     document.getElementById('form-section').classList.add('hidden');
-    const sec = document.getElementById('success-section');
-    sec.classList.remove('hidden');
-
-    if (g.attending) {
+    document.getElementById('success-section').classList.remove('hidden');
+    if (g.status === 'attending') {
       document.getElementById('success-heading').textContent = "You're on the list!";
-      document.getElementById('success-message').textContent =
-        `We're thrilled you can join us, ${g.name.split(' ')[0]}!`;
+      document.getElementById('success-message').textContent = `We're thrilled you can join us, ${g.name.split(' ')[0]}!`;
       document.getElementById('conf-status').textContent = 'Attending ✓';
       document.getElementById('conf-status').className = 'status-attending';
-      const totalGuests = g.plusGuests > 0 ? `You + ${g.plusGuests}` : 'Just you';
-      document.getElementById('conf-guests').textContent = totalGuests;
+      document.getElementById('conf-guests').textContent = g.plusGuests > 0 ? `You + ${g.plusGuests}` : 'Just you';
     } else {
       document.getElementById('success-heading').textContent = "We'll miss you!";
-      document.getElementById('success-message').textContent =
-        `Thanks for letting us know, ${g.name.split(' ')[0]}.`;
+      document.getElementById('success-message').textContent = `Thanks for letting us know, ${g.name.split(' ')[0]}.`;
       document.getElementById('conf-status').textContent = 'Declined';
       document.getElementById('conf-status').className = 'status-declined';
       document.getElementById('conf-guests').textContent = '—';
     }
-
-    document.getElementById('conf-name').textContent = g.name;
+    document.getElementById('conf-name').textContent  = g.name;
     document.getElementById('conf-email').textContent = g.email;
   }
 }
