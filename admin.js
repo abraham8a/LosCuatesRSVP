@@ -111,6 +111,19 @@ document.getElementById('guest-tbody').addEventListener('click', async e => {
   }
 });
 
+/* Search */
+const searchInput = document.getElementById('guest-search');
+if (searchInput) {
+  searchInput.addEventListener('input', () => {
+    const q = searchInput.value.toLowerCase().trim();
+    document.querySelectorAll('#guest-tbody tr').forEach(tr => {
+      const name  = tr.children[0] ? tr.children[0].textContent.toLowerCase() : '';
+      const email = tr.children[1] ? tr.children[1].textContent.toLowerCase() : '';
+      tr.style.display = (!q || name.includes(q) || email.includes(q)) ? '' : 'none';
+    });
+  });
+}
+
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
