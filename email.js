@@ -51,10 +51,10 @@
  *
  * ─────────────────────────────────────────────────────────────────────── */
 
-const EMAILJS_PUBLIC_KEY       = 'YOUR_PUBLIC_KEY';       // ← from EmailJS account
-const EMAILJS_SERVICE_ID       = 'YOUR_SERVICE_ID';       // ← from Email Services
-const EMAILJS_GUEST_TEMPLATE_ID = 'YOUR_GUEST_TEMPLATE';  // ← Template A ID
-const EMAILJS_HOST_TEMPLATE_ID  = 'YOUR_HOST_TEMPLATE';   // ← Template B ID
+const EMAILJS_PUBLIC_KEY       = '68kJyRg-vxRpceJQc';       // ← from EmailJS account
+const EMAILJS_SERVICE_ID       = 'service_rv6zncg';       // ← from Email Services
+const EMAILJS_GUEST_TEMPLATE_ID = 'template_8pf3q2h';  // ← Template A ID
+const EMAILJS_HOST_TEMPLATE_ID  = 'template_wgisd5u';   // ← Template B ID
 
 const HOST_EMAIL  = 'crazes_homages.8o@icloud.com';
 const CANCEL_URL  = 'https://abraham8a.github.io/LosCuatesRSVP/cancel.html';
