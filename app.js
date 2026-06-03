@@ -1,17 +1,17 @@
 /* ── RSVP App — Supabase Storage & Form Logic ── */
 
 const CONFIG = {
-  eventTitle:    'Benjamin & Valerie Grad Party',
-  eventDate:     'Saturday, August 8 · 7:00 PM',
-  eventLocation: '1204 Fair Park Blvd, Harlingen, TX 78550',
+  eventTitle:    'Benjamin & Valerie Ochoa Grad Party',
+  eventDate:     'Saturday, August 8 · Diner: 6-7 * Dance 7-11 PM',
+  eventLocation: 'Casa de Amistad * 1204 Fair Park Blvd, Harlingen, TX 78550',
 };
 
 /* ─────────────────────────────────────────────────────
    SUPABASE CONFIG
    Fill these in after completing setup steps below.
    ───────────────────────────────────────────────────── */
-const SUPABASE_URL    = 'https://gaijndkezfexpovajwva.supabase.co';   // e.g. https://xxxx.supabase.co
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdhaWpuZGtlemZleHBvdmFqd3ZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxODMyMjcsImV4cCI6MjA5Mzc1OTIyN30.tqCe7POy3fl6P9AXle_y3eMiTxqjUD0F6RJd0FxDvN8';     // long string from Supabase dashboard
+const SUPABASE_URL    = 'https://gaijndkezfexpovajwva.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdhaWpuZGtlemZleHBvdmFqd3ZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxODMyMjcsImV4cCI6MjA5Mzc1OTIyN30.tqCe7POy3fl6P9AXle_y3eMiTxqjUD0F6RJd0FxDvN8';
 
 /* ─ Supabase client (loaded via CDN in HTML) ─ */
 let db;
