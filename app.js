@@ -2,7 +2,7 @@
 
 const CONFIG = {
   eventTitle:    'Benjamin & Valerie Grad Party',
-  eventDate:     'Saturday, August 8 · 7:00 PM',
+  eventDate:     'Saturday, August 8 Dinner: 6-7 PM Dance: 7-11 PM',
   eventLocation: '1204 Fair Park Blvd, Harlingen, TX 78550',
 };
 
