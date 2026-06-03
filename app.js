@@ -6,14 +6,10 @@ const CONFIG = {
   eventLocation: 'Casa de Amistad * 1204 Fair Park Blvd, Harlingen, TX 78550',
 };
 
-/* ─────────────────────────────────────────────────────
-   SUPABASE CONFIG
-   Fill these in after completing setup steps below.
-   ───────────────────────────────────────────────────── */
-const SUPABASE_URL    = 'https://gaijndkezfexpovajwva.supabase.co';
+const SUPABASE_URL     = 'https://gaijndkezfexpovajwva.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdhaWpuZGtlemZleHBvdmFqd3ZhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxODMyMjcsImV4cCI6MjA5Mzc1OTIyN30.tqCe7POy3fl6P9AXle_y3eMiTxqjUD0F6RJd0FxDvN8';
 
-/* ─ Supabase client (loaded via CDN in HTML) ─ */
+/* ─ Supabase client ─ */
 let db;
 function getDB() {
   if (!db) db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -23,19 +19,14 @@ function getDB() {
 /* ─ Database helpers ─ */
 async function loadGuests() {
   const { data, error } = await getDB()
-    .from('rsvps')
-    .select('*')
-    .order('created_at', { ascending: false });
+    .from('rsvps').select('*').order('created_at', { ascending: false });
   if (error) { console.error('loadGuests:', error); return []; }
   return data || [];
 }
 
 async function findGuestByEmail(email) {
   const { data, error } = await getDB()
-    .from('rsvps')
-    .select('*')
-    .ilike('email', email.trim())
-    .maybeSingle();
+    .from('rsvps').select('*').ilike('email', email.trim()).maybeSingle();
   if (error) { console.error('findGuestByEmail:', error); return null; }
   return data;
 }
@@ -50,8 +41,7 @@ async function upsertGuest(data) {
     message:     data.message || '',
   };
   const { error } = await getDB()
-    .from('rsvps')
-    .upsert(row, { onConflict: 'email' });
+    .from('rsvps').upsert(row, { onConflict: 'email' });
   if (error) { console.error('upsertGuest:', error); throw error; }
 }
 
@@ -60,8 +50,7 @@ async function updateGuestStatus(email, status) {
     .from('rsvps')
     .update({ status, updated_at: new Date().toISOString() })
     .ilike('email', email.trim())
-    .select()
-    .maybeSingle();
+    .select().maybeSingle();
   if (error) { console.error('updateGuestStatus:', error); return null; }
   return data;
 }
@@ -115,7 +104,7 @@ if (form) {
 
     const submitBtn = form.querySelector('.btn-submit');
     submitBtn.disabled = true;
-    submitBtn.querySelector('.btn-text').textContent = 'Sending…';
+    submitBtn.querySelector('.btn-text').textContent = 'Sending\u2026';
 
     const attending = form.querySelector('input[name="attending"]:checked').value === 'yes';
     const guestData = {
@@ -132,6 +121,7 @@ if (form) {
       showSuccess(guestData);
       if (typeof sendRsvpEmails === 'function') sendRsvpEmails(guestData);
     } catch (err) {
+      console.error('Submit error:', err);
       submitBtn.disabled = false;
       submitBtn.querySelector('.btn-text').textContent = 'Send my RSVP';
       alert('Something went wrong saving your RSVP. Please try again.');
@@ -143,16 +133,16 @@ if (form) {
     document.getElementById('success-section').classList.remove('hidden');
     if (g.status === 'attending') {
       document.getElementById('success-heading').textContent = "You're on the list!";
-      document.getElementById('success-message').textContent = `We're thrilled you can join us, ${g.name.split(' ')[0]}!`;
-      document.getElementById('conf-status').textContent = 'Attending ✓';
+      document.getElementById('success-message').textContent = "We're thrilled you can join us, " + g.name.split(' ')[0] + '!';
+      document.getElementById('conf-status').textContent = 'Attending \u2713';
       document.getElementById('conf-status').className = 'status-attending';
-      document.getElementById('conf-guests').textContent = g.plusGuests > 0 ? `You + ${g.plusGuests}` : 'Just you';
+      document.getElementById('conf-guests').textContent = g.plusGuests > 0 ? 'You + ' + g.plusGuests : 'Just you';
     } else {
       document.getElementById('success-heading').textContent = "We'll miss you!";
-      document.getElementById('success-message').textContent = `Thanks for letting us know, ${g.name.split(' ')[0]}.`;
+      document.getElementById('success-message').textContent = 'Thanks for letting us know, ' + g.name.split(' ')[0] + '.';
       document.getElementById('conf-status').textContent = 'Declined';
       document.getElementById('conf-status').className = 'status-declined';
-      document.getElementById('conf-guests').textContent = '—';
+      document.getElementById('conf-guests').textContent = '\u2014';
     }
     document.getElementById('conf-name').textContent  = g.name;
     document.getElementById('conf-email').textContent = g.email;
@@ -164,34 +154,33 @@ if (form) {
   }
 
   function buildCalendarLinks() {
-    // Event: Saturday August 8 2025 7:00 PM CDT (UTC-5)
-    const start = '20250809T000000Z'; // Aug 8 7PM CDT = Aug 9 00:00 UTC
-    const end   = '20250809T040000Z'; // +4 hours
-    const title = encodeURIComponent(CONFIG.eventTitle);
-    const loc   = encodeURIComponent(CONFIG.eventLocation);
-    const details = encodeURIComponent('We look forward to celebrating with you!');
+    var start   = '20250809T000000Z';
+    var end     = '20250809T040000Z';
+    var title   = encodeURIComponent(CONFIG.eventTitle);
+    var loc     = encodeURIComponent(CONFIG.eventLocation);
+    var details = encodeURIComponent('We look forward to celebrating with you!');
 
     document.getElementById('cal-google').href =
-      `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&location=${loc}&details=${details}`;
+      'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + title +
+      '&dates=' + start + '/' + end + '&location=' + loc + '&details=' + details;
 
-    const icsContent = [
+    var icsLines = [
       'BEGIN:VCALENDAR',
       'VERSION:2.0',
       'BEGIN:VEVENT',
-      `DTSTART:${start}`,
-      `DTEND:${end}`,
-      `SUMMARY:${CONFIG.eventTitle}`,
-      `LOCATION:${CONFIG.eventLocation}`,
+      'DTSTART:' + start,
+      'DTEND:' + end,
+      'SUMMARY:' + CONFIG.eventTitle,
+      'LOCATION:' + CONFIG.eventLocation,
       'DESCRIPTION:We look forward to celebrating with you!',
       'END:VEVENT',
       'END:VCALENDAR'
-    ].join('
-');
-    const icsBlob = new Blob([icsContent], { type: 'text/calendar' });
-    const icsUrl  = URL.createObjectURL(icsBlob);
+    ];
+    var icsBlob = new Blob([icsLines.join('\r\n')], { type: 'text/calendar' });
+    document.getElementById('cal-apple').href = URL.createObjectURL(icsBlob);
 
-    document.getElementById('cal-apple').href   = icsUrl;
     document.getElementById('cal-outlook').href =
-      `https://outlook.live.com/calendar/0/deeplink/compose?subject=${title}&startdt=2025-08-08T19:00:00&enddt=2025-08-08T23:00:00&location=${loc}&body=${details}`;
+      'https://outlook.live.com/calendar/0/deeplink/compose?subject=' + title +
+      '&startdt=2025-08-08T19:00:00&enddt=2025-08-08T23:00:00&location=' + loc + '&body=' + details;
   }
 }
