@@ -73,14 +73,14 @@
               <input type="radio" name="attending" value="yes" checked />
               <span class="radio-body">
                 <span class="radio-icon accept">✓</span>
-                <span>✅ Joyfully accepts</span>
+                <span>Joyfully accepts</span>
               </span>
             </label>
             <label class="radio-card">
               <input type="radio" name="attending" value="no" />
               <span class="radio-body">
                 <span class="radio-icon decline">✕</span>
-                <span>❌ Regretfully declines</span>
+                <span>Regretfully declines</span>
               </span>
             </label>
           </div>
@@ -128,6 +128,14 @@
       </div>
       <p class="cancel-hint">Need to cancel? <a href="https://abraham8a.github.io/LosCuatesRSVP/cancel.html">Manage your RSVP →</a></p>
       <p class="email-status" id="email-status"></p>
+      <div class="cal-buttons" id="cal-buttons" style="display:none">
+        <p class="cal-label">Add to your calendar</p>
+        <div class="cal-row">
+          <a id="cal-google" class="cal-btn" target="_blank">Google</a>
+          <a id="cal-apple"  class="cal-btn" target="_blank">Apple</a>
+          <a id="cal-outlook" class="cal-btn" target="_blank">Outlook</a>
+        </div>
+      </div>
     </section>
 
     <p class="page-cancel-hint">Need to cancel a previous RSVP? <a href="https://abraham8a.github.io/LosCuatesRSVP/cancel.html">Manage your RSVP →</a></p>

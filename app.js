@@ -156,5 +156,42 @@ if (form) {
     }
     document.getElementById('conf-name').textContent  = g.name;
     document.getElementById('conf-email').textContent = g.email;
+
+    if (g.status === 'attending') {
+      buildCalendarLinks();
+      document.getElementById('cal-buttons').style.display = '';
+    }
+  }
+
+  function buildCalendarLinks() {
+    // Event: Saturday August 8 2025 7:00 PM CDT (UTC-5)
+    const start = '20250809T000000Z'; // Aug 8 7PM CDT = Aug 9 00:00 UTC
+    const end   = '20250809T040000Z'; // +4 hours
+    const title = encodeURIComponent(CONFIG.eventTitle);
+    const loc   = encodeURIComponent(CONFIG.eventLocation);
+    const details = encodeURIComponent('We look forward to celebrating with you!');
+
+    document.getElementById('cal-google').href =
+      `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&location=${loc}&details=${details}`;
+
+    const icsContent = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'BEGIN:VEVENT',
+      `DTSTART:${start}`,
+      `DTEND:${end}`,
+      `SUMMARY:${CONFIG.eventTitle}`,
+      `LOCATION:${CONFIG.eventLocation}`,
+      'DESCRIPTION:We look forward to celebrating with you!',
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('
+');
+    const icsBlob = new Blob([icsContent], { type: 'text/calendar' });
+    const icsUrl  = URL.createObjectURL(icsBlob);
+
+    document.getElementById('cal-apple').href   = icsUrl;
+    document.getElementById('cal-outlook').href =
+      `https://outlook.live.com/calendar/0/deeplink/compose?subject=${title}&startdt=2025-08-08T19:00:00&enddt=2025-08-08T23:00:00&location=${loc}&body=${details}`;
   }
 }

@@ -93,6 +93,8 @@ async function sendRsvpEmails(guest) {
   };
 
   /* 1. Guest confirmation email */
+  const calLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(CONFIG.eventTitle)}&dates=20250809T000000Z/20250809T040000Z&location=${encodeURIComponent(CONFIG.eventLocation)}&details=${encodeURIComponent('We look forward to celebrating with you!')}`;
+
   const guestParams = {
     ...commonParams,
     guest_name:    guest.name,
@@ -101,6 +103,7 @@ async function sendRsvpEmails(guest) {
     guest_status:  statusLabel,
     dietary:       guest.dietary || 'None',
     cancel_url:    cancelLink,
+    calendar_url:  calLink,
   };
 
   /* 2. Host notification email */
