@@ -150,6 +150,9 @@ document.getElementById('export-btn').addEventListener('click', async () => {
 });
 
 document.getElementById('clear-btn').addEventListener('click', async () => {
+  const pw = prompt('Enter password to clear all RSVPs:');
+  if (pw === null) return;
+  if (pw !== '1234') { alert('Incorrect password.'); return; }
   if (!confirm('Delete ALL RSVP data from the database? This cannot be undone.')) return;
   await getDB().from('rsvps').delete().neq('id', 0);
   renderDashboard();
