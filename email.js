@@ -78,11 +78,11 @@ async function sendRsvpEmails(guest) {
     return;
   }
 
-  const guestCount = guest.attending
+  const isAttending = guest.status === 'attending';
+  const guestCount  = isAttending
     ? (guest.plusGuests > 0 ? `You + ${guest.plusGuests}` : 'Just you')
     : 'N/A';
-
-  const statusLabel = guest.attending ? 'Attending ✓' : 'Declined';
+  const statusLabel = isAttending ? 'Attending ✓' : 'Declined';
 
   const cancelLink = `${CANCEL_URL}#${encodeURIComponent(guest.email)}`;
 
