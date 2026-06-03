@@ -72,6 +72,7 @@ async function renderDashboard() {
     const plus    = g.status === 'attending' ? (g.plus_guests > 0 ? `+${g.plus_guests}` : '—') : '—';
 
     const tr = document.createElement('tr');
+    tr.dataset.id = g.id;
     tr.innerHTML = `
       <td><strong>${esc(g.name)}</strong></td>
       <td style="color:var(--text-muted)">${esc(g.email)}</td>
@@ -79,7 +80,8 @@ async function renderDashboard() {
       <td style="color:var(--text-muted);font-size:.82rem">${esc(g.dietary)||'—'}</td>
       <td style="color:var(--text-muted);font-size:.82rem;max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(g.message)||'—'}</td>
       <td><span class="badge ${badge}">${label}</span></td>
-      <td style="color:var(--text-muted);font-size:.82rem;white-space:nowrap">${dateStr}</td>`;
+      <td style="color:var(--text-muted);font-size:.82rem;white-space:nowrap">${dateStr}</td>
+      <td><button class="btn-delete" data-id="${g.id}" data-name="${esc(g.name)}" title="Delete guest">✕</button></td>`;
     tbody.appendChild(tr);
   });
 }
@@ -88,6 +90,26 @@ function esc(s) {
   if (!s) return '';
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
+
+/* Delete guest */
+document.getElementById('guest-tbody').addEventListener('click', async e => {
+  const btn = e.target.closest('.btn-delete');
+  if (!btn) return;
+  const name = btn.dataset.name;
+  const id   = btn.dataset.id;
+  if (!confirm(`Remove ${name} from the guest list? This cannot be undone.`)) return;
+  btn.textContent = '…';
+  btn.disabled = true;
+  const { error } = await getDB().from('rsvps').delete().eq('id', id);
+  if (error) {
+    alert('Could not delete. Please try again.');
+    btn.textContent = '✕';
+    btn.disabled = false;
+  } else {
+    btn.closest('tr').remove();
+    renderDashboard();
+  }
+});
 
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => {
