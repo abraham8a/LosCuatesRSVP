@@ -2,8 +2,8 @@
 
 const CONFIG = {
   eventTitle:    'Benjamin & Valerie Ochoa Grad Party',
-  eventDate:     'Saturday, August 8 Dinner: 6-7 PM Dance: 7-11 PM',
-  eventLocation: '1204 Fair Park Blvd, Harlingen, TX 78550',
+  eventDate:     'Saturday, August 8, 2026 * Dinner: 6-7 PM * Dance: 7-11 PM',
+  eventLocation: 'Casa de Amistad * 1204 Fair Park Blvd, Harlingen, TX 78550',
 };
 
 /* ─ Storage helpers ─ */
