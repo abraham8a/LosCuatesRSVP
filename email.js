@@ -109,7 +109,7 @@ async function sendRsvpEmails(guest) {
     guest_name:    guest.name,
     guest_email:   guest.email,
     guest_count:   guestCount,
-    status:        statusLabel,
+    guest_status:        statusLabel,
     dietary:       guest.dietary || 'None',
     guest_message: guest.message || 'None',
     host_email:    HOST_EMAIL,
