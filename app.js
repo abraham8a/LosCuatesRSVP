@@ -1,7 +1,7 @@
 /* ── RSVP App — Shared Storage & Form Logic ── */
 
 const CONFIG = {
-  eventTitle:    'Benjamin & Valerie Grad Party',
+  eventTitle:    'Benjamin & Valerie Ochoa Grad Party',
   eventDate:     'Saturday, August 8 Dinner: 6-7 PM Dance: 7-11 PM',
   eventLocation: '1204 Fair Park Blvd, Harlingen, TX 78550',
 };
