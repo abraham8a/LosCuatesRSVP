@@ -577,6 +577,8 @@ textarea { resize: vertical; min-height: 60px; }
 .badge.attending { background: var(--green-light); color: var(--green); }
 .badge.declined  { background: var(--red-light);   color: var(--red); }
 .badge.cancelled { background: #f0ede8; color: var(--text-muted); }
+.badge.full-invite  { background: #eaf4ee; color: #2d7a4f; }
+.badge.dance-only   { background: #eef0ff; color: #4455cc; }
 
 .btn-delete {
   background: transparent;

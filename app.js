@@ -56,6 +56,7 @@ async function upsertGuest(data) {
     status:      data.status,
     plus_guests: data.plusGuests || 0,
     message:     data.message || '',
+    event_type:  data.eventType || 'full',
   };
   const { error } = await getDB()
     .from('rsvps').upsert(row, { onConflict: 'email' });
@@ -130,6 +131,7 @@ if (form) {
       status:     attending ? 'attending' : 'declined',
       plusGuests: attending ? parseInt(document.getElementById('guests').value, 10) : 0,
       message:    attending ? document.getElementById('message').value.trim() : '',
+      eventType:  eventType,
     };
 
     try {

@@ -55,6 +55,8 @@ async function renderDashboard() {
   if (currentFilter === 'attending') filtered = attending;
   else if (currentFilter === 'declined') filtered = declined;
   else if (currentFilter === 'cancelled') filtered = cancelled;
+  else if (currentFilter === 'dance') filtered = guests.filter(g => g.event_type === 'dance');
+  else if (currentFilter === 'full') filtered = guests.filter(g => g.event_type === 'full' || !g.event_type);
 
   const tbody = document.getElementById('guest-tbody');
   const empty = document.getElementById('empty-state');
@@ -76,6 +78,7 @@ async function renderDashboard() {
     tr.innerHTML = `
       <td><strong>${esc(g.name)}</strong></td>
       <td style="color:var(--text-muted)">${esc(g.email)}</td>
+      <td><span class="badge ${g.event_type === 'dance' ? 'dance-only' : 'full-invite'}">${g.event_type === 'dance' ? 'Dance' : 'Dinner & Dance'}</span></td>
       <td>${plus}</td>
       <td style="color:var(--text-muted);font-size:.82rem;max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(g.message)||'—'}</td>
       <td><span class="badge ${badge}">${label}</span></td>
