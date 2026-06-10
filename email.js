@@ -101,7 +101,6 @@ async function sendRsvpEmails(guest) {
     guest_email:   guest.email,
     guest_count:   guestCount,
     guest_status:  statusLabel,
-    dietary:       guest.dietary || 'None',
     cancel_url:    cancelLink,
     calendar_url:  calLink,
   };
@@ -113,7 +112,6 @@ async function sendRsvpEmails(guest) {
     guest_email:   guest.email,
     guest_count:   guestCount,
     guest_status:  statusLabel,
-    dietary:       guest.dietary || 'None',
     guest_message: guest.message || 'None',
     host_email:    HOST_EMAIL,
   };

@@ -55,7 +55,6 @@ async function upsertGuest(data) {
     email:       data.email.toLowerCase(),
     status:      data.status,
     plus_guests: data.plusGuests || 0,
-    dietary:     data.dietary || '',
     message:     data.message || '',
   };
   const { error } = await getDB()
@@ -130,7 +129,6 @@ if (form) {
       email:      document.getElementById('email').value.trim(),
       status:     attending ? 'attending' : 'declined',
       plusGuests: attending ? parseInt(document.getElementById('guests').value, 10) : 0,
-      dietary:    attending ? document.getElementById('dietary').value.trim() : '',
       message:    attending ? document.getElementById('message').value.trim() : '',
     };
 

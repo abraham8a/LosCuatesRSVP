@@ -77,7 +77,6 @@ async function renderDashboard() {
       <td><strong>${esc(g.name)}</strong></td>
       <td style="color:var(--text-muted)">${esc(g.email)}</td>
       <td>${plus}</td>
-      <td style="color:var(--text-muted);font-size:.82rem">${esc(g.dietary)||'—'}</td>
       <td style="color:var(--text-muted);font-size:.82rem;max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(g.message)||'—'}</td>
       <td><span class="badge ${badge}">${label}</span></td>
       <td style="color:var(--text-muted);font-size:.82rem;white-space:nowrap">${dateStr}</td>
