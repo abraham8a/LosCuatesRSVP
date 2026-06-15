@@ -3,7 +3,7 @@
 const EVENTS = {
   full: {
     eventTitle:    'Benjamin & Valerie Ochoa Grad Party',
-    eventDate:     'Saturday, August 8 · Dinner 6–7 PM & Dance 7–11 PM',
+    eventDate:     'Saturday, August 8 · Dinner 5:30–6:30 PM & Dance 7–11 PM',
     eventLocation: 'Casa de Amistad · 1204 Fair Park Blvd, Harlingen, TX 78550',
     calStart:      '20250809T000000Z',  // Aug 8 6PM CDT
     calEnd:        '20250809T040000Z',  // 11PM CDT
