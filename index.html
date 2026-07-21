@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RSVP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+
+  <div class="bg-shape shape-1"></div>
+  <div class="bg-shape shape-2"></div>
+
+  <main class="container">
+
+    <!-- Side-by-side header: photo left, details right -->
+    <header class="event-header-split">
+
+      <!-- Photo column -->
+      <div class="photo-col">
+        <div class="photo-frame" id="photo-frame">
+          <img
+            id="grad-photo"
+            class="grad-photo"
+            src="BenValInvite.jpg"
+            alt="Graduate photo"
+          />
+        </div>
+      </div>
+
+      <!-- Details column -->
+      <div class="details-col">
+        <span class="eyebrow">You're invited</span>
+        <h1 id="event-title">Graduation Celebration</h1>
+        <div class="event-meta">
+          <span class="meta-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="15" height="15"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            <span id="event-date">Saturday, July 19 · 4:00 PM</span>
+          </span>
+          <span class="meta-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="15" height="15"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            <span id="event-location">123 Rose Garden Lane</span>
+          </span>
+        </div>
+      </div>
+
+    </header>
+
+    <section class="rsvp-card" id="form-section">
+      <h2>Will you be joining us?</h2>
+      <form id="rsvp-form" novalidate>
+
+        <div class="field-group">
+          <label for="name">Full name</label>
+          <input type="text" id="name" placeholder="Your name" required autocomplete="name" />
+          <span class="field-error" id="name-error"></span>
+        </div>
+
+        <div class="field-group">
+          <label for="email">Email address</label>
+          <input type="email" id="email" placeholder="you@example.com" required autocomplete="email" />
+          <span class="field-error" id="email-error"></span>
+          <span class="field-hint">We'll use this if you need to manage your RSVP</span>
+        </div>
+
+        <div class="field-group">
+          <label>Response</label>
+          <div class="radio-group">
+            <label class="radio-card">
+              <input type="radio" name="attending" value="yes" checked />
+              <span class="radio-body">
+                <span class="radio-icon accept">✓</span>
+                <span>Joyfully accepts</span>
+              </span>
+            </label>
+            <label class="radio-card">
+              <input type="radio" name="attending" value="no" />
+              <span class="radio-body">
+                <span class="radio-icon decline">✕</span>
+                <span>Regretfully declines</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="field-group attending-only">
+          <label for="guests">Additional guests</label>
+          <select id="guests">
+            <option value="0">Just me</option>
+            <option value="1">+1 guest</option>
+            <option value="2">+2 guests</option>
+            <option value="3">+3 guests</option>
+            <option value="4">+4 guests</option>
+            <option value="5">+5 guests</option>
+          </select>
+        </div>
+
+        <div class="field-group attending-only">
+          <label for="message">Message for the host <span class="optional">(optional)</span></label>
+          <textarea id="message" rows="2" placeholder="We can't wait!"></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          <span class="btn-text">Send my RSVP</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+
+      </form>
+    </section>
+
+    <section class="rsvp-card success-card hidden" id="success-section">
+      <div class="success-icon">✓</div>
+      <h2 id="success-heading">You're on the list!</h2>
+      <p id="success-message">We're so excited to see you.</p>
+      <div class="confirmation-box">
+        <div class="conf-row"><span>Name</span><strong id="conf-name">—</strong></div>
+        <div class="conf-row"><span>Email</span><strong id="conf-email">—</strong></div>
+        <div class="conf-row"><span>Guests</span><strong id="conf-guests">—</strong></div>
+        <div class="conf-row"><span>Status</span><strong id="conf-status" class="status-attending">Attending ✓</strong></div>
+      </div>
+      <p class="cancel-hint">Need to cancel? <a href="https://abraham8a.github.io/LosCuatesRSVP/cancel.html">Manage your RSVP →</a></p>
+      <p class="email-status" id="email-status"></p>
+      <div class="cal-buttons" id="cal-buttons" style="display:none">
+        <p class="cal-label">Add to your calendar</p>
+        <div class="cal-row">
+          <a id="cal-google" class="cal-btn" target="_blank">Google</a>
+          <a id="cal-apple"  class="cal-btn" target="_blank">Apple</a>
+          <a id="cal-outlook" class="cal-btn" target="_blank">Outlook</a>
+        </div>
+      </div>
+    </section>
+
+    <p class="page-cancel-hint">Need to cancel a previous RSVP? <a href="https://abraham8a.github.io/LosCuatesRSVP/cancel.html">Manage your RSVP →</a></p>
+
+  </main>
+
+  <footer>
+    <a href="admin.html" class="admin-link">Host view</a>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="app.js"></script>
+  <script src="email.js"></script>
+  <script src="photo.js"></script>
+</body>
+</html>
